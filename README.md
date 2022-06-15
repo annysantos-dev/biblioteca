@@ -2,11 +2,11 @@
 Sistema Biblioteca (projeto web do curso ciência da computação UEPB)
  
 ## Equipe de Desenvolvimento:	
-Larrissa Dantas
+Larrissa Dantas |
 Geovannio Vinhas
 
 ## Equipe de Manutenção
-Joseanny Santos
+Joseanny Santos |
 Ana Karoliny Silva
 
 ## Trabalho da disciplina de manutenção para aplicar:
