@@ -163,7 +163,7 @@ public class FuncionarioController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/funcionario/delete/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/funcionario/delete/{id}", method = RequestMethod.DELETE)
 	public String removerFuncionario(@PathVariable("id") int idFuncionario, Model model) {
 		Funcionario funcionario = funcionarioService.getFuncionarioById(idFuncionario);
 		funcionarioService.deletarFuncionario(funcionario);

@@ -264,7 +264,7 @@ public class AlunoController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/aluno/delete/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/aluno/delete/{id}", method = RequestMethod.DELETE)
 	public String removerAlunos(@SessionAttribute("funcionarioLogado") Funcionario funcionarioLogado,
 			@PathVariable("id") int idAluno, Model model) {
 		Aluno aluno = alunoService.getAlunoById(idAluno);

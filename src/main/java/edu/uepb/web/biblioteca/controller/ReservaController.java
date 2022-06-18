@@ -34,7 +34,7 @@ public class ReservaController {
 	 * @return
 	 */
 	@RequestMapping(value = "/reservas", method = RequestMethod.GET)
-	public String getListaEmprestimo(@SessionAttribute("funcionarioLogado") Funcionario funcionarioLogado,
+	public String getListaResrva(@SessionAttribute("funcionarioLogado") Funcionario funcionarioLogado,
 			Model model) {
 		model.addAttribute("funcionarioLogado", funcionarioLogado);
 		model.addAttribute("listaReserva", reservaService.getListaReserva());
@@ -85,8 +85,8 @@ public class ReservaController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/reserva/cancelar/{id}", method = RequestMethod.GET)
-	public String removerCurso(@SessionAttribute("funcionario") Funcionario funcionarioLogado,
+	@RequestMapping(value = "/reserva/cancelar/{id}", method = RequestMethod.DELETE)
+	public String removerReservar(@SessionAttribute("funcionario") Funcionario funcionarioLogado,
 			@PathVariable("id") int id, Model model) {
 		reservaService.cancelarReserva(id);
 		return "redirect:/reservas";

@@ -107,7 +107,7 @@ public class CursoController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/curso/delete/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/curso/delete/{id}", method = RequestMethod.DELETE)
 	public String removerCurso(@SessionAttribute("funcionarioLogado") Funcionario funcionarioLogado,
 			@PathVariable("id") int idCurso, Model model) {
 		Curso curso = cursoService.getCursoById(idCurso);
