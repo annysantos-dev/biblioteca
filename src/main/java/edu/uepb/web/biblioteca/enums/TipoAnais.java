@@ -6,5 +6,14 @@ package edu.uepb.web.biblioteca.enums;
  *
  */
 public enum TipoAnais {
-	ARTIGO, POSTER, RESUMO, NONE;
+	ARTIGO("artigo"),
+	POSTER("poster"),
+	RESUMO("resumo"),
+	NONE("none");
+
+	private String description;
+
+	TipoAnais(String description) {this.description = description;}
+
+	public String getTipoAnais() { return description; }
 }

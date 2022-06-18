@@ -19,12 +19,12 @@ import edu.uepb.web.biblioteca.utils.Email;
 
 /**
  * A classe Service da Reserva
- * 
+ *
  * @autor geovanniovinhas <vinhasgeovannio@gmail.com
  */
 @Service
 public class ReservaService {
-	private static Logger logger = Logger.getLogger(Reserva.class);
+	private static final Logger logger = Logger.getLogger(Reserva.class);
 	private ReservaDAOImpl reservaDAO;
 	private AlunoDAOImpl alunoDAO;
 	private ItemDAOImpl itemDAO;
@@ -33,7 +33,7 @@ public class ReservaService {
 
 	/**
 	 * Pegar a lista de todas as reservas cadastradas no sistema
-	 * 
+	 *
 	 * @return List<Reserva>
 	 */
 	public List<Reserva> getListaReserva() {
@@ -44,7 +44,7 @@ public class ReservaService {
 
 	/**
 	 * Pegar todas as reservas do Aluno
-	 * 
+	 *
 	 * @param idAluno
 	 * @return
 	 */
@@ -56,7 +56,7 @@ public class ReservaService {
 
 	/**
 	 * Aluno realiza a reserva de um item
-	 * 
+	 *
 	 * @param idAluno
 	 * @param idItem
 	 * @param enviarEmail
@@ -82,9 +82,9 @@ public class ReservaService {
 		}
 
 		// Verifica se o item ainda tem no estoque
-		if (item.getQuantidade() > 0) {
-			logger.error("O aluno ainda tem divida ainda nao pago: " + idAluno + " e " + idItem);
-			throw new EmprestimoException("O item ainda tem no etoque, para que fazer a reserva!");
+		if (item.getQuantidade() < 0) {
+			logger.error("Não será possivel realizar a reserva, pois o item não está no estoque: "  + idItem);
+			throw new EmprestimoException("Não será possivel realizar a reserva, pois o item não está no estoque!");
 		}
 
 		// Verifica se falta mais de 20 dias para terminar o periodo
@@ -120,7 +120,7 @@ public class ReservaService {
 
 	/**
 	 * Cancelar a reserva do item
-	 * 
+	 *
 	 * @param id
 	 */
 	public void cancelarReserva(int id) {

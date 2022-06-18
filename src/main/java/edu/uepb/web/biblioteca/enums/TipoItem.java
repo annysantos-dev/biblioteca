@@ -7,6 +7,17 @@ package edu.uepb.web.biblioteca.enums;
  *
  */
 public enum TipoItem {
-	ANAIS, JORNAL, LIVRO, MIDIA, REVISTA, TRABALHOCONCLUSAO
+	ANAIS("anais"),
+	JORNAL("jornal"),
+	LIVRO("livro"),
+	MIDIA("mídia"),
+	REVISTA("revista"),
+	TRABALHOCONCLUSAO("trabalho conclusão");
+
+	private String description;
+
+	TipoItem(String description) {this.description = description;}
+
+	public String getTipoItem() { return description; }
 }
 

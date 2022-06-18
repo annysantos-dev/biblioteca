@@ -8,5 +8,11 @@ package edu.uepb.web.biblioteca.enums;
  *
  */
 public enum TipoMidia {
-	CD, DVD, NONE;
+	CD("cd"), DVD("dvd"), NONE("none");
+
+	private String description;
+
+	TipoMidia(String description) {this.description = description;}
+
+	public String getTipoMidia() { return description; }
 }

@@ -37,20 +37,20 @@ public class ItemDAOTest {
 		listaItem = new ArrayList<Item>();
 
 		midia = new Item();
-		midia.setTipoItem(TipoItem.MIDIA);
+		midia.setTipoItem(TipoItem.MIDIA.getTipoItem());
 		midia.setTitulo("Titulo Midia123");
-		midia.setTipoMidia(TipoMidia.CD);
+		midia.setTipoMidia(TipoMidia.CD.getTipoMidia());
 		midia.setDataGravacao("12/02/2009");
 		midia.setQuantidade(10);
 
 		jornal = new Item();
-		jornal.setTipoItem(TipoItem.JORNAL);
+		jornal.setTipoItem(TipoItem.JORNAL.getTipoItem());
 		jornal.setTitulo("Titulo Jornal");
 		jornal.setData("02/04/2003");
 		jornal.setQuantidade(2);
 
 		livro = new Item();
-		livro.setTipoItem(TipoItem.LIVRO);
+		livro.setTipoItem(TipoItem.LIVRO.getTipoItem());
 		livro.setIsbn("234-3232");
 		livro.setTitulo("Titulo Livro");
 		livro.setAutor("AA");
@@ -62,7 +62,7 @@ public class ItemDAOTest {
 		livro.setQuantidade(4);
 
 		revista = new Item();
-		revista.setTipoItem(TipoItem.REVISTA);
+		revista.setTipoItem(TipoItem.REVISTA.getTipoItem());
 		revista.setTitulo("titulo revista");
 		revista.setEditora("III");
 		revista.setEdicao("4");
@@ -71,9 +71,9 @@ public class ItemDAOTest {
 		revista.setQuantidade(6);
 		
 		anais = new Item();
-		anais.setTipoItem(TipoItem.ANAIS);
+		anais.setTipoItem(TipoItem.ANAIS.getTipoItem());
 		anais.setTitulo("Titulo Anais");
-		anais.setTipoAnais(TipoAnais.RESUMO);
+		anais.setTipoAnais(TipoAnais.RESUMO.getTipoAnais());
 		anais.setCongresso("ASE");
 		anais.setAnoPublicacao("2009");
 		anais.setLocal("LOSK");
@@ -91,7 +91,7 @@ public class ItemDAOTest {
 	public void get()  {
 		Item jornal1 = new Item();
 		jornal1 = new Item();
-		jornal1.setTipoItem(TipoItem.JORNAL);
+		jornal1.setTipoItem(TipoItem.JORNAL.getTipoItem());
 		jornal1.setTitulo("Titulo Jornal1");
 		jornal1.setData("01/02/2013");
 		jornal.setQuantidade(2);
@@ -129,7 +129,7 @@ public class ItemDAOTest {
 	@Test
 	public void isExiste() throws ExistException {
 		Item item = new Item();
-		item.setTipoItem(TipoItem.JORNAL);
+		item.setTipoItem(TipoItem.JORNAL.getTipoItem());
 		item.setTitulo("Titulo Item");
 		item.setData("29/02/2020");
 		

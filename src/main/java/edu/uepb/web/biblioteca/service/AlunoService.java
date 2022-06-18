@@ -20,21 +20,22 @@ import edu.uepb.web.biblioteca.model.Universidade;
 
 /**
  * Classe Service do Aluno
- * 
+ *
  * @autor geovanniovinhas <vinhasgeovannio@gmail.com
  */
 @Service
 public class AlunoService {
 	private static Logger logger = Logger.getLogger(AlunoService.class);
-	private AlunoDAOImpl alunoDAO;
+	private AlunoDAOImpl alunoDAO = new AlunoDAOImpl();
 	private DividaDAOImpl dividaDAO;
 	private EmprestimoDAOImpl emprestimoDAO;
 	private ReservaDAOImpl reservaDAO;
-	private UniversidadeDAOImpl universidadeDAO;
+	private UniversidadeDAOImpl universidadeDAO = new UniversidadeDAOImpl();
+	private CursoService cursoService;
 
 	/**
 	 * Autenticar aluno
-	 * 
+	 *
 	 * @param matricula
 	 * @param senha
 	 * @return Aluno
@@ -42,14 +43,13 @@ public class AlunoService {
 	 */
 	public Aluno autenticar(String matricula, String senha) throws AutenticacaoException {
 		logger.info("Executa o metodo 'autenticar' do alunoService");
-		alunoDAO = new AlunoDAOImpl();
 		return alunoDAO.login(matricula, senha);
 	}
 
 	/**
-	 * 
-	 * Cadastrar aluno. Qualquer funcion�rio poder� cadastrar o aluno.
-	 * 
+	 *
+	 * Cadastrar aluno. Qualquer funcion rio poder  cadastrar o aluno.
+	 *
 	 * @param funcionario
 	 * @param aluno
 	 * @return id do aluno cadastrado
@@ -59,8 +59,6 @@ public class AlunoService {
 	public int cadastrarAluno(Funcionario funcionario, Aluno aluno) throws AutenticacaoException, ExistException {
 		logger.info("Executa o metodo 'cadastrarAluno' do alunoService com param: " + funcionario + " e : " + aluno);
 
-		alunoDAO = new AlunoDAOImpl();
-		universidadeDAO = new UniversidadeDAOImpl();
 		Universidade universidade = universidadeDAO.get();
 		aluno.setPeriodoIngresso(universidade.getPeriodo());
 		aluno.setMatricula(this.gerarMatricula(aluno));
@@ -74,68 +72,31 @@ public class AlunoService {
 
 	/**
 	 * Gera matricula para o aluno cadastrado. A matricula e unico para cada aluno.
-	 * 
+	 *
 	 * @param aluno
 	 * @return matricula gerado
 	 */
-	public String gerarMatricula(Aluno aluno) {
-		logger.info("Execucao metodo  'gerarMatricula'");
-		String nivelAbreviacao = "", cursoAbreviacao, anoAbreviacao, firstAbreviacao, secondAbreviacao, curso, ano,
-				codigo;
+	public String gerarMatricula(Aluno aluno){
 
-		curso = aluno.getCurso().getNome();
+		return cursoService.criarAbreviacaoTipoNivel(aluno) + cursoService.criaAbreviacaoNomeCurso(aluno)+
+				criarAbreviacaoAnoIngresso(aluno) + criarCodigo(aluno);
+	}
+	public String criarAbreviacaoAnoIngresso(Aluno aluno){
+		String ano , anoAbreviacao;
 		ano = aluno.getAno();
-
-		// Criar Abreviacao do nivel (e.g. Graduacao -> G)
-		switch (aluno.getCurso().getNivel()) {
-		case GRADUACAO:
-			nivelAbreviacao = "G";
-			break;
-		case ESPECIALIZACAO:
-			nivelAbreviacao = "E";
-			break;
-		case MESTRADO:
-			nivelAbreviacao = "M";
-			break;
-		case DOUTORADO:
-			nivelAbreviacao = "D";
-			break;
-		}
-
-		/**
-		 * Criar abreviaca para nome do curso (e.g. Odontologia -> OD Ciencia da
-		 * Computacao -> CC)
-		 */
-		int index = curso.indexOf(' ');
-		int lastIndex = curso.lastIndexOf(' ');
-
-		if (index == -1) {
-			cursoAbreviacao = curso.substring(0, 2);
-		} else {
-			firstAbreviacao = Character.toString(curso.substring(0, index).charAt(0));
-			secondAbreviacao = Character.toString(curso.substring(lastIndex + 1, curso.length()).charAt(0));
-
-			cursoAbreviacao = firstAbreviacao + secondAbreviacao;
-		}
-
-		// Criar abreviacao do ano de ingresso (e.g. 2010 -> 10)
 		anoAbreviacao = ano.substring(2, ano.length());
-
-		// Criar codigo (e.g. 1 -> 001)
-		alunoDAO = new AlunoDAOImpl();
+		return anoAbreviacao;
+	}
+	public String criarCodigo(Aluno aluno){
+		String codigo;
 		codigo = String.format("%03d", alunoDAO.getUltimoId() + 1);
-
-		logger.info(nivelAbreviacao + cursoAbreviacao.toUpperCase() + "-" + anoAbreviacao + aluno.getPeriodoIngresso()
-				+ codigo);
-
-		return nivelAbreviacao + cursoAbreviacao.toUpperCase() + "-" + anoAbreviacao + aluno.getPeriodoIngresso()
-				+ codigo;
+		return codigo;
 	}
 
 	/**
-	 * 
-	 * Remover aluno. S� o funcion�rio do tipo administrador poder� remover.
-	 * 
+	 *
+	 * Remover aluno. S  o funcion rio do tipo administrador poder  remover.
+	 *
 	 * @param funcionario
 	 * @param aluno
 	 * @return true se foi removido
@@ -178,9 +139,7 @@ public class AlunoService {
 	}
 
 	/**
-	 * Atualizar dados do aluno. Qualquer funcion�rio poder� atualizar.
-	 * 
-	 * @param funcionario
+	 * Atualizar dados do aluno. Qualquer funcion rio poder  atualizar.
 	 * @param aluno
 	 * @return boolean
 	 */
@@ -195,7 +154,7 @@ public class AlunoService {
 
 	/**
 	 * Pegar os alunos do sistema
-	 * 
+	 *
 	 * @return List<Aluno>
 	 */
 	public List<Aluno> getListaAluno() {
@@ -206,7 +165,7 @@ public class AlunoService {
 
 	/**
 	 * Pegar o Aluno pelo seu ID
-	 * 
+	 *
 	 * @param idAluno
 	 * @return Aluno
 	 */
